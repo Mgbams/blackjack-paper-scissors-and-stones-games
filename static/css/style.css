@@ -1,0 +1,116 @@
+.flex {
+    display: flex;
+    justify-content: space-around;
+    border: 1px solid black;
+    padding: 10px;
+}
+.flex div {
+    border: 1px solid black;
+    padding: 5px;
+}
+.flex-1 {
+    display: flex;
+    justify-content: center;
+    width: 75vw;
+    flex-direction: column;
+    margin: auto !important;
+    border: 1px solid black;
+}
+.flex-1 h2 {
+    text-align: center;
+}
+#imageDiv, .paper-scissors-rock-div, .colour-changer-flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+#imageDiv img {
+    margin: 10px 0px;
+}
+.cat-button {
+    color: white;
+}
+.cat-container, .game-container {
+    border: 1px solid black;
+    padding: 10px;
+    border-top: none;
+}
+.challenge2-container, .challenge3-container, .challenge4-container {
+    border: 1px solid black;
+    padding: 10px;
+    border-top: 1px solid grey;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.paper-scissors-rock-div img {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 10px;
+}
+.paper-scissors-rock-div img:hover {
+    -webkit-box-shadow: 10px 10px 22px 0px rgba(0, 0, 255, 0.658);
+    -moz-box-shadow: 10px 10px 22px 0px rgba(0, 0, 255, 0.658);
+    box-shadow: 10px 10px 22px 0px rgba(0, 0, 255, 0.658);
+}
+
+/*Black Jack Challenge CSS*/
+
+.hit, .deal {
+    color: white;
+}
+.stand {
+    color: black;
+}
+
+.game-buttons-wrapper, .results-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    padding: 10px;
+    border-bottom: none;
+}
+.game-buttons-wrapper .game-buttons {
+    width: 20vw;
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+.game-buttons-wrapper {
+    background: url('https://wallpapercave.com/wp/f349NvJ.jpg');
+}
+.results-wrapper .results {
+    width: 30vw;
+}
+.game-area {
+    color: white;
+    background: url('https://wallpapercave.com/wp/f349NvJ.jpg');
+    width: 100%;
+    display: flex;
+    border: 1px solid black;
+    border-bottom: none;
+}
+.game-area div {
+    width: 50%;
+    height: 45vh;
+}
+.game-area .user-board {
+    border-right: 1px solid black;
+}
+.description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.computer-board, .user-board {
+    text-align: center;
+}

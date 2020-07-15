@@ -1,0 +1,110 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./static/css/style.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
+    <title>Document</title>
+</head>
+<body>
+    <div class="flex-1">
+        <h2>Challenge 1: Your Age in Days</h2>
+        <div class="flex">
+            <div>
+                <button class="btn btn-primary" onclick="ageInDays()">Click Me</button>
+            </div>
+
+            <div>
+                <button class="btn btn-danger" onclick="reset()">Reset</button>
+            </div>
+        </div>
+
+        <div  class="flex">
+            <div id="age"></div>
+        </div>
+
+        <div class="cat-container">
+            <div class="challenge2-container"><h2>Challenge 2: Cat generator</h2></div>
+            <div class="button-container"><button class="btn btn-success cat-button" onclick="catGenerator()">Generate Chat</button></div>
+            <div id="imageDiv"></div>
+        </div>
+
+        <div  class="game-container">
+            <div class="challenge3-container"><h2>Challenge 3: Paper, Scissors and stone game</h2></div>
+            <div class="paper-scissors-rock-div" id="flex-game-box">
+                <img id="rock" src="https://th.bing.com/th/id/OIP.CBgCtuq5v8Yb3cpjtVK71AHaF_?pid=Api&rs=1" alt="rock image" onclick="rpsGame(this)"/>
+                <img id="paper" src="https://s-media-cache-ak0.pinimg.com/736x/08/ab/8f/08ab8f410c2c88dc1072209dc2a28f35.jpg" alt="paper image" onclick="rpsGame(this)" />
+                <img id="scissors" src="https://png.pngtree.com/png_detail/18/09/10/pngtree-vector-cartoon-scissors-png-clipart_1384264.jpg" alt="scissors image" onclick="rpsGame(this)" />
+            </div>
+        </div>
+
+        <div  class="game-container">
+            <div class="challenge4-container"><h2>Challenge 4: Change the Colour of All Buttons</h2></div>
+            <div class="colour-changer-flex-container">
+                <div>
+                    <form action="">
+                        <select name="changeColours" id="colors" onchange="buttonColourChanger(this)">
+                            <option value="random">Random</option>
+                            <option value="red">Red</option>
+                            <option value="green">Green</option>
+                            <option value="blue">Blue</option>
+                            <option value="reset">Reset</option>
+                          </select>
+                    </form>
+                </div>
+
+                <div class="button-container"><button class="btn btn-primary cat-button">Wee!</button></div>
+                <div class="button-container"><button class="btn btn-danger cat-button">Yahoo!</button></div>
+                <div class="button-container"><button class="btn btn-warning cat-button">Google!</button></div>
+                <div class="button-container"><button class="btn btn-success cat-button">Facebook!</button></div>
+            </div>
+        </div>
+
+        <!--Black jack challenge starts here-->
+        <div class="black-jack-wrapper">
+            <div class="description">
+                <h2>Challenge 6: Black Jack</h2>
+                <h6><span>Let's Play</span></h6>
+            </div>
+
+            <div class="game-area">
+                <div class="user-board"><h3>You: <span id="player-score">0</span></h3></div>
+                <div class="computer-board"><h3>Dealer: <span id="dealer-score">0</span></h3></div>
+            </div>
+
+            <div class="game-buttons-wrapper">
+                <div class="game-buttons">
+                    <div class="button-container"><button class="btn btn-primary hit" id="hit-button">Hit</button></div>
+                    <div class="button-container"><button class="btn btn-warning stand" id="stand-button">Stand</button></div>
+                    <div class="button-container"><button class="btn btn-danger deal" id="deal-button">Deal</button></div>
+                </div>
+            </div>
+
+            <div class="results-wrapper">
+                <div class="results">
+
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th scope="col">Wins</th>
+                            <th scope="col">Losses</th>
+                            <th scope="col">Draws</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td><span id="wins-points">0</span></td>
+                            <td><span id="losses-points">0</span></td>
+                            <td><span id="draws-points">0</span></td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./static/js/script.js"></script>
+</body>
+</html>
