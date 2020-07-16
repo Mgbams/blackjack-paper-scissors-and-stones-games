@@ -201,7 +201,9 @@ function showCard(activePlayer) {
 }
 
 function blackJackDeal() {
-    let allImages = document.querySelector('#playerBoard').querySelectorAll('img').remove();
+    let allImages = document.querySelector('#playerBoard').querySelectorAll('img');
+    console.log(allImages);
+    allImages[0].remove();
 }
 
 
