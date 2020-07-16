@@ -178,7 +178,9 @@ document.querySelector('#deal-button').addEventListener('click', blackJackDeal);
 
 let blackJackGame = {
     'player': {'scoreSpan': '#player-score', 'div': '#playerBoard', 'score': 0},
-    'dealer': {'scoreSpan': '#dealer-score', 'div': '#computerBoard', 'score': 0}
+    'dealer': {'scoreSpan': '#dealer-score', 'div': '#computerBoard', 'score': 0},
+    'cards': ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'K', 'J', 'Q', 'A'],
+    'cardsMap': {'2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10, 'K': 10, 'J': 10, 'Q': 10, 'A': [1, 11]},
 }
 
 const PLAYER = blackJackGame['player'];
@@ -187,13 +189,16 @@ const DEALER = blackJackGame['dealer'];
 const hitSound = new Audio('static/sounds/swish.m4a'); // Creating a sound using Audio() object
 
 function hitAction() {
-    showCard(PLAYER);
+    let card = randomCard();
+    showCard(PLAYER, card);
+    updateScore(card, PLAYER);
+    showScore(PLAYER);
 }
 
-function showCard(activePlayer) {
+function showCard(activePlayer, cardLink) {
     // alert('you clicked on hit button');
     let cardImage = document.createElement('img');
-    cardImage.src = './static/images/Q.png';
+    cardImage.src = `./static/images/${cardLink}.png`;
     cardImage.setAttribute('id', 'card-images')
     document.querySelector(activePlayer['div']).appendChild(cardImage);
 
@@ -201,10 +206,40 @@ function showCard(activePlayer) {
 }
 
 function blackJackDeal() {
-    let allImages = document.querySelector('#playerBoard').querySelectorAll('img');
-    console.log(allImages);
-    allImages[0].remove();
+    let playerImages = document.querySelector('#playerBoard').querySelectorAll('img');
+
+    let dealerImages = document.querySelector('#computerBoard').querySelectorAll('img');
+    // console.log(allImages);
+
+    for(let i = 0; i < playerImages.length; i++) {
+        playerImages[i].remove();
+    }
+
+    for(let i = 0; i < dealerImages.length; i++) {
+        dealerImages[i].remove();
+    }
 }
 
+function randomCard() {
+    let randomIndex = Math.floor(Math.random() * 13);
+    return blackJackGame['cards'][randomIndex];
+}
+
+function updateScore(card, activePlayer) {
+    if (card === 'A') {
+         // If adding 11 keeps me below 21, then add 11 otherwise addd 1
+        if ( activePlayer['score'] + blackJackGame['cardsMap'][card][1] <= 21) {
+            activePlayer['score'] += blackJackGame['cardsMap'][card][1];
+        } else {
+            activePlayer['score'] += blackJackGame['cardsMap'][card][0]; 
+        }
+    } else {
+        activePlayer['score'] += blackJackGame['cardsMap'][card];
+    }
+}
+
+function showScore(activePlayer) {
+    document.querySelector(activePlayer['scoreSpan']).textContent = activePlayer['score'];
+}
 
 
