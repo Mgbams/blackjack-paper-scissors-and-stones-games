@@ -100,7 +100,7 @@
 }
 .game-area div {
     width: 50%;
-    height: 45vh;
+    height: 55vh;
 }
 .game-area .user-board {
     border-right: 1px solid black;
@@ -113,4 +113,11 @@
 }
 .computer-board, .user-board {
     text-align: center;
+}
+
+/* card images*/
+#card-images {
+    width: 80px;
+    height: 100px;
+    margin: 20px;
 }

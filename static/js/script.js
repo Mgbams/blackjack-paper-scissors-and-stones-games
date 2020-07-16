@@ -174,12 +174,34 @@ function buttonRandom() {
 */
 document.querySelector('#hit-button').addEventListener('click', hitAction);
 
+document.querySelector('#deal-button').addEventListener('click', blackJackDeal);
+
 let blackJackGame = {
-    'player': {'scoreSpan': '#player-score', 'div': '#user-board', 'score': 0},
-    'dealer': {'scoreSpan': '#dealer-score', 'div': '#computer-board', 'score': 0}
+    'player': {'scoreSpan': '#player-score', 'div': '#playerBoard', 'score': 0},
+    'dealer': {'scoreSpan': '#dealer-score', 'div': '#computerBoard', 'score': 0}
 }
+
+const PLAYER = blackJackGame['player'];
+const DEALER = blackJackGame['dealer'];
+
+const hitSound = new Audio('static/sounds/swish.m4a'); // Creating a sound using Audio() object
+
 function hitAction() {
-    alert('you clicked on hit button');
+    showCard(PLAYER);
+}
+
+function showCard(activePlayer) {
+    // alert('you clicked on hit button');
+    let cardImage = document.createElement('img');
+    cardImage.src = './static/images/Q.png';
+    cardImage.setAttribute('id', 'card-images')
+    document.querySelector(activePlayer['div']).appendChild(cardImage);
+
+    hitSound.play(); // used to play the sound
+}
+
+function blackJackDeal() {
+    let allImages = document.querySelector('#playerBoard').querySelectorAll('img').remove();
 }
 
 
