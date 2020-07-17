@@ -174,6 +174,8 @@ function buttonRandom() {
 */
 document.querySelector('#hit-button').addEventListener('click', hitAction);
 
+document.querySelector('#stand-button').addEventListener('click', dealerLogic);
+
 document.querySelector('#deal-button').addEventListener('click', blackJackDeal);
 
 let blackJackGame = {
@@ -197,15 +199,19 @@ function hitAction() {
 
 function showCard(activePlayer, cardLink) {
     // alert('you clicked on hit button');
-    let cardImage = document.createElement('img');
-    cardImage.src = `./static/images/${cardLink}.png`;
-    cardImage.setAttribute('id', 'card-images')
-    document.querySelector(activePlayer['div']).appendChild(cardImage);
+    if (activePlayer['score'] <= 21) {   
+        let cardImage = document.createElement('img');
+        cardImage.src = `./static/images/${cardLink}.png`;
+        cardImage.setAttribute('id', 'card-images')
+        document.querySelector(activePlayer['div']).appendChild(cardImage);
 
-    hitSound.play(); // used to play the sound
+        hitSound.play(); // used to play the sound
+    }
 }
 
 function blackJackDeal() {
+    computeWinner(); 
+    
     let playerImages = document.querySelector('#playerBoard').querySelectorAll('img');
 
     let dealerImages = document.querySelector('#computerBoard').querySelectorAll('img');
@@ -218,6 +224,14 @@ function blackJackDeal() {
     for(let i = 0; i < dealerImages.length; i++) {
         dealerImages[i].remove();
     }
+    PLAYER['score'] = 0;
+    DEALER['score'] = 0;
+    document.querySelector('#player-score').textContent = 0;
+    document.querySelector('#dealer-score').textContent = 0;
+
+    
+    document.querySelector('#player-score').style.color = '#ffffff';
+    document.querySelector('#dealer-score').style.color = '#ffffff';
 }
 
 function randomCard() {
@@ -239,7 +253,48 @@ function updateScore(card, activePlayer) {
 }
 
 function showScore(activePlayer) {
-    document.querySelector(activePlayer['scoreSpan']).textContent = activePlayer['score'];
+    if (activePlayer['score'] > 21) {
+        document.querySelector(activePlayer['scoreSpan']).textContent = 'BUST!'; 
+        document.querySelector(activePlayer['scoreSpan']).style.color = 'red'; 
+    } else {
+        document.querySelector(activePlayer['scoreSpan']).textContent = activePlayer['score'];
+        document.querySelector(activePlayer['scoreSpan']).style.color = 'red'; 
+    }
 }
 
+function dealerLogic() {
+    let card = randomCard();
+    showCard(DEALER , card);
+    updateScore(card, DEALER );
+    showScore(DEALER );
+}
+
+// Computing a winner
+
+function computeWinner() {
+    let winner;
+    if (PLAYER['score'] <= 21) {
+        // higher score than dealer or when dealer bursts
+        if (PLAYER['score'] > DEALER['score'] || (DEALER['score'] > 21)) {
+            console.log('PLAYER win!');
+            winner = PLAYER;
+        } else if (PLAYER['score'] < DEALER['score'] ) {
+            console.log('PLAYER lost!');
+            winner = DEALER;
+        } else if (PLAYER['score'] === DEALER['score'] ) {
+            console.log('You Drew!');
+        }
+
+        // Condition: Player bursts but dealer doesn't
+    } else if (PLAYER['score'] > 21 && DEALER['score'] <= 21) {
+        console.log('PLAYER Lost!');
+        winner = DEALER;
+
+        // Condition: When Player and Dealer bursts
+    } else if (PLAYER['score'] > 21 && DEALER['score'] > 21) {
+        console.log('You drew!');
+    }
+    console.log('winner is ', winner);
+    return winner;
+}
 
