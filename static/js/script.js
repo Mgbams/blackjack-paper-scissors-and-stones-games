@@ -282,18 +282,25 @@ function showScore(activePlayer) {
     }
 }
 
-function dealerLogic() {
-    blackJackGame['isStand'] = true // set isStand to true when Stand button is clicked
-    let card = randomCard();
-    showCard(DEALER , card);
-    updateScore(card, DEALER );
-    showScore(DEALER );
+// Creating an async delay function 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-    if (DEALER['score'] > 15) {
-        blackJackGame['turnsOver'] = true // setting turnsOver to true to show everyone has finished playing
-        let winner = computeWinner();
-        showWinner(winner);
+async function dealerLogic() {
+    blackJackGame['isStand'] = true // set isStand to true when Stand button is clicked
+    
+    while (DEALER['score'] < 16 && blackJackGame['isStand'] === true) {
+        let card = randomCard();
+        showCard(DEALER , card);
+        updateScore(card, DEALER );
+        showScore(DEALER );
+        await sleep(1000); // calling the sleep function for every 1ms
     }
+
+    blackJackGame['turnsOver'] = true // setting turnsOver to true to show everyone has finished playing
+    let winner = computeWinner();
+    showWinner(winner);
 }
 
 // Computing winner and return who just won
@@ -327,7 +334,7 @@ function computeWinner() {
 
 function showWinner(winner) {
     let message, messageColor;
-    
+
     if (blackJackGame['turnsOver'] === true) {
         if (winner === PLAYER) {
             document.querySelector('#wins-points').textContent = blackJackGame['wins'];
