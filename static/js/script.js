@@ -185,7 +185,9 @@ let blackJackGame = {
     'cardsMap': {'2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10, 'K': 10, 'J': 10, 'Q': 10, 'A': [1, 11]},
     'wins': 0,
     'losses': 0,
-    'draws': 0
+    'draws': 0,
+    'isStand': false,
+    'turnsOver': false
 }
 
 const PLAYER = blackJackGame['player'];
@@ -196,10 +198,13 @@ const winSound = new Audio('static/sounds/cash.mp3');
 const lossSound = new Audio('static/sounds/aww.mp3');
 
 function hitAction() {
-    let card = randomCard();
-    showCard(PLAYER, card);
-    updateScore(card, PLAYER);
-    showScore(PLAYER);
+    // hit button only works when isStand is false
+    if (blackJackGame['isStand'] === false) {
+        let card = randomCard();
+        showCard(PLAYER, card);
+        updateScore(card, PLAYER);
+        showScore(PLAYER);
+    }
 }
 
 function showCard(activePlayer, cardLink) {
@@ -215,7 +220,9 @@ function showCard(activePlayer, cardLink) {
 }
 
 function blackJackDeal() {
-     computeWinner(); 
+  if (blackJackGame['turnsOver'] === true) {
+      blackJackGame['isStand'] = false;
+    computeWinner(); 
     // let winner = computeWinner();
     // showWinner(winner);
     let playerImages = document.querySelector('#playerBoard').querySelectorAll('img');
@@ -242,6 +249,9 @@ function blackJackDeal() {
     // change take to let's play on clickinh deal button and change its colour to black
     document.querySelector('#showResult').textContent = "Let's Play"; 
     document.querySelector('#showResult').style.color = 'black';
+
+    blackJackGame['turnsOver'] === true;
+  }
 }
 
 function randomCard() {
@@ -273,12 +283,14 @@ function showScore(activePlayer) {
 }
 
 function dealerLogic() {
+    blackJackGame['isStand'] = true // set isStand to true when Stand button is clicked
     let card = randomCard();
     showCard(DEALER , card);
     updateScore(card, DEALER );
     showScore(DEALER );
 
     if (DEALER['score'] > 15) {
+        blackJackGame['turnsOver'] = true // setting turnsOver to true to show everyone has finished playing
         let winner = computeWinner();
         showWinner(winner);
     }
@@ -315,25 +327,26 @@ function computeWinner() {
 
 function showWinner(winner) {
     let message, messageColor;
-
-    if (winner === PLAYER) {
-        document.querySelector('#wins-points').textContent = blackJackGame['wins'];
-        message = 'You won!';
-        messageColor = 'green';
-        winSound.play();
-    } else if (winner === DEALER) {
-        document.querySelector('#losses-points').textContent = blackJackGame['losses'];
-        message = 'You lost!';
-        messageColor = 'red';
-        lossSound.play();
-    } else {
-        document.querySelector('#draws-points').textContent = blackJackGame['draws'];
-        message = 'You drew';
-        messageColor = 'black';
+    
+    if (blackJackGame['turnsOver'] === true) {
+        if (winner === PLAYER) {
+            document.querySelector('#wins-points').textContent = blackJackGame['wins'];
+            message = 'You won!';
+            messageColor = 'green';
+            winSound.play();
+        } else if (winner === DEALER) {
+            document.querySelector('#losses-points').textContent = blackJackGame['losses'];
+            message = 'You lost!';
+            messageColor = 'red';
+            lossSound.play();
+        } else {
+            document.querySelector('#draws-points').textContent = blackJackGame['draws'];
+            message = 'You drew';
+            messageColor = 'black';
+        }
+    
+        document.querySelector('#showResult').textContent = message;
+        document.querySelector('#showResult').style.color = messageColor;
     }
-
-    document.querySelector('#showResult').textContent = message;
-    document.querySelector('#showResult').style.color = messageColor;
-
 }
 
