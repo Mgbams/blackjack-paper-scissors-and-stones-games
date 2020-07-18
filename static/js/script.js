@@ -189,6 +189,8 @@ const PLAYER = blackJackGame['player'];
 const DEALER = blackJackGame['dealer'];
 
 const hitSound = new Audio('static/sounds/swish.m4a'); // Creating a sound using Audio() object
+const winSound = new Audio('static/sounds/cash.mp3');
+const lossSound = new Audio('static/sounds/aww.mp3');
 
 function hitAction() {
     let card = randomCard();
@@ -211,7 +213,7 @@ function showCard(activePlayer, cardLink) {
 
 function blackJackDeal() {
     computeWinner(); 
-    
+    showWinner(computeWinner());
     let playerImages = document.querySelector('#playerBoard').querySelectorAll('img');
 
     let dealerImages = document.querySelector('#computerBoard').querySelectorAll('img');
@@ -296,5 +298,26 @@ function computeWinner() {
     }
     console.log('winner is ', winner);
     return winner;
+}
+
+function showWinner(winner) {
+    let message, messageColor;
+
+    if (winner === PLAYER) {
+        message = 'You won!';
+        messageColor = 'green';
+        winSound.play();
+    } else if (winner === DEALER) {
+        message = 'You lost!';
+        messageColor = 'red';
+        lossSound.play();
+    } else {
+        message = 'You drew';
+        messageColor = 'black';
+    }
+
+    document.querySelector('#showResult').textContent = message;
+    document.querySelector('#showResult').style.color = messageColor;
+
 }
 
